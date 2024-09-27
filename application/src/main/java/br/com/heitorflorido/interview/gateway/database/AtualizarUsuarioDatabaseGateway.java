@@ -20,10 +20,12 @@ public class AtualizarUsuarioDatabaseGateway implements AtualizarUsuarioGateway 
         return usuarioRepository.findById(id)
             .flatMap(existingUser -> {
                 UsuarioData updatedUser = UsuarioData.builder()
-                    .id(id)
-                    .nome(usuario.getNome())
-                    .cidade(usuario.getCidade())
-                    .uf(usuario.getUf())
+                    .id(existingUser.getId())
+                    .nome(usuario.getNome() != null ? usuario.getNome() : existingUser.getNome())
+                    .dataNascimento(usuario.getDataNascimento() != null ? usuario.getDataNascimento() : existingUser.getDataNascimento())
+                    .cep(usuario.getCep() != null ? usuario.getCep() : existingUser.getCep())
+                    .cidade(usuario.getCidade() != null ? usuario.getCidade() : existingUser.getCidade())
+                    .uf(usuario.getUf() != null ? usuario.getUf() : existingUser.getUf())
                     .build();
                 return usuarioRepository.save(updatedUser);
             })
